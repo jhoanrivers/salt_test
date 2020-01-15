@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,7 @@ import com.example.salt.model.News;
 
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MovieHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MovieHolder>{
 
 
     List<News> movieList;
@@ -47,7 +48,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MovieHolder> {
         holder.tvDescription.setText(movieList.get(position).getDescription());
         holder.tvPublished.setText(movieList.get(position).getPublishedAt());
         Glide.with(context).load(movieList.get(position).getUrlToImage()).into(holder.ivImageUrl);
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "You click "+ movieList.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -55,6 +61,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MovieHolder> {
     public int getItemCount() {
         return movieList.size();
     }
+
 
     public class MovieHolder extends RecyclerView.ViewHolder {
 
@@ -70,5 +77,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MovieHolder> {
             ivImageUrl = v.findViewById(R.id.iv_imageurl);
 
         }
+
+
+
     }
+
+
 }

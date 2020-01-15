@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.salt.R;
@@ -21,10 +24,12 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
     RecyclerView rvMovies;
 
 
+    @BindView(R.id.pb_loading)
+    ProgressBar progressBar;
+
     private String TAG = "MainActivity";
     RecyclerView.Adapter adapter;
     MainPresenter mainPresenter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +59,8 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
 
     private void getNewsList(){
         Log.e("gituaja", "getMovieList: ");
-        mainPresenter.getMovies();
+        mainPresenter.getNews();
     }
-
-
 
 
     @Override
@@ -81,10 +84,14 @@ public class MainActivity extends AppCompatActivity implements MainViewInterface
         showToast(e);
     }
 
-
-
-
-
+    @Override
+    public void displayLoading(boolean loading) {
+        if (loading) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+    }
 
 
 }

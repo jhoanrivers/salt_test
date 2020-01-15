@@ -24,11 +24,13 @@ public class MainPresenter implements MainPresenterInterface{
     }
 
     @Override
-    public void getMovies(){
+    public void getNews(){
         getObservable().subscribeWith(getObserver());
     }
 
     public Observable<NewsResponse> getObservable(){
+        mvi.displayLoading(true);
+
         Log.e("terpanggil","Observable");
         return NetworkClient.getRetrofit().create(NetworkInterface.class)
                 .getMovies("us","e01f38652256427482b14865e3831b0b")
@@ -43,6 +45,7 @@ public class MainPresenter implements MainPresenterInterface{
             @Override
             public void onNext(NewsResponse movieResponse) {
                 Log.e("Entah","OnNext"+movieResponse.getTotalResults());
+                mvi.displayLoading(false);
                 mvi.displayNews(movieResponse);
             }
 
